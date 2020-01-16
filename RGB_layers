@@ -1,0 +1,8 @@
+clc; close all; clear;
+I = imread('cameraman.tif');
+imshow(I);
+imhist(I);
+J = histeq(I);
+imshow(J);
+imhist(J);
+[n,m]=size(I);
