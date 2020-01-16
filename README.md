@@ -1,1 +1,1 @@
-# Histogram_equlaization
+# DIP
