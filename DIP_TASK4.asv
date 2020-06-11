@@ -1,0 +1,47 @@
+clc;clear;close all;
+%Load the image
+img = imread('ironman.jpg');
+[m,n] = size(img);
+%Creating matrix surrounded by zeros
+cimg = [zeros(m,n),img,zeros(m,1)];
+rimg = [zeros(1,n+2);cimg;zeros(1,n+2)];
+fimg = uint8(zeros(m,n));
+%Creating new image matrix
+for i = 2:m
+    for j = 2:n
+        fimg(i-1,j-1) = get_val(i,j,rimg);
+    end
+end
+subplot(121)
+imshow(img)
+title('Original Image');
+subplot(122)
+imshow(fimg)
+title('Modified image')
+
+
+
+function val = get_val(i,j,in_img)
+im = zeros(1,8);
+% |1|2|3|
+% |4|im|6|
+% |7|8|9|
+%Pixel at 6
+if in_img(i,j) < in_img(i,j+1)   im(1) = 1;else im(1) = 0;end
+%Pixel at 6
+if in_img(i,j) < in_img(i-1,j+1) im(2) = 1;else im(2) = 0;end
+%Pixel at 2
+if in_img(i,j) < in_img(i-1,j)   im(3) = 1;else im(3) = 0;end
+%Pixel at 1
+if in_img(i,j) < in_img(i-1,j-1) im(4) = 1;else im(4) = 0;end
+%Pixel at 4
+if in_img(i,j) < in_img(i,j-1)   im(5) = 1;else im(5) = 0;end
+%Pixel at 7
+if in_img(i,j) < in_img(i+1,j-1) im(6) = 1;else im(6) = 0;end
+%Pixel at 8
+if in_img(i,j) < in_img(i+1,j)   im(7) = 1;else im(7) = 0;end
+%Pixel at 9
+if in_img(i,j) < in_img(i+1,j+1) im(8) = 1;else im(8) = 0;end
+
+val = bi2de(im);
+end
